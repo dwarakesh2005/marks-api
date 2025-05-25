@@ -14,9 +14,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Load marks from JSON file
+# Load marks data and convert array to dict
 with open(os.path.join(os.path.dirname(__file__), "marks.json"), "r") as f:
-    marks_data = json.load(f)
+    data_array = json.load(f)
+    marks_data = {item["name"]: item["marks"] for item in data_array}
 
 @app.get("/api")
 def get_marks(name: List[str] = Query(...)):
